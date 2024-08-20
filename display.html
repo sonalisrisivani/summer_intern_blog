@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Grid View</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+        .item-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px;
+            justify-content: center;
+        }
+        .item-card {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .item-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .item-card .item-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+        .item-card.active .item-info {
+            opacity: 1;
+        }
+        .item-card .item-info .item-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .item-card .item-info .item-details {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Item Grid View</h1>
+    <div id="itemGrid" class="item-grid"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2SQ1nSwkGbli1EClWffp84YJrVI7KxZE",
+            authDomain: "dynamic-blog-c41a0.firebaseapp.com",
+            databaseURL: "https://dynamic-blog-c41a0-default-rtdb.firebaseio.com",
+            projectId: "dynamic-blog-c41a0",
+            storageBucket: "dynamic-blog-c41a0.appspot.com",
+            messagingSenderId: "977944393868",
+            appId: "1:977944393868:web:fc669305460f925f99a3a9",
+            measurementId: "G-9FNKR9DHRZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const itemGrid = document.getElementById('itemGrid');
+
+        onValue(ref(database, 'items'), (snapshot) => {
+            itemGrid.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+
+                const img = document.createElement('img');
+                img.src = data.image_url;
+                img.alt = "Item Image";
+
+                const itemInfo = document.createElement('div');
+                itemInfo.className = 'item-info';
+                
+                const itemName = document.createElement('div');
+                itemName.className = 'item-name';
+                itemName.textContent = data.item;
+
+                const itemDetailsDiv = document.createElement('div');
+                itemDetailsDiv.className = 'item-details';
+                itemDetailsDiv.textContent = data.details;
+
+                itemInfo.appendChild(itemName);
+                itemInfo.appendChild(itemDetailsDiv);
+
+                itemCard.appendChild(img);
+                itemCard.appendChild(itemInfo);
+
+                itemCard.addEventListener('click', function() {
+                    itemCard.classList.toggle('active');
+                });
+
+                itemGrid.appendChild(itemCard);
+            });
+        });
+    </script>
+</body>
+</html>
