@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Item Details</title>
+    <title>Item Management</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
         }
         .container {
             background: #ffffff;
@@ -21,8 +22,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 400px;
+            margin-bottom: 20px;
         }
-        h1 {
+        h1, h2 {
             margin-bottom: 20px;
             color: #333;
         }
@@ -53,9 +55,17 @@
         <button id="addItem">Add Item</button>
     </div>
 
+    <div class="container">
+        <h2>Delete Existing Item</h2>
+        <form id="deleteItemForm">
+            <input type="text" id="deleteItemName" placeholder="Enter Item Name to Delete" required><br>
+            <button type="submit">Delete Item</button>
+        </form>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getDatabase, ref, set, remove, get, child } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyC2SQ1nSwkGbli1EClWffp84YJrVI7KxZE",
@@ -71,6 +81,7 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // Add item to Firebase
         document.getElementById('addItem').addEventListener('click', function() {
             const itemInput = document.getElementById('itemInput');
             const imageInput = document.getElementById('imageInput');
@@ -95,6 +106,49 @@
                 });
             } else {
                 alert('Please fill out all fields');
+            }
+        });
+
+        // Delete item from Firebase
+        document.getElementById('deleteItemForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const itemName = document.getElementById('deleteItemName').value.trim();
+
+            if (!itemName) {
+                alert('Please enter an item name.');
+                return;
+            }
+
+            try {
+                const dbRef = ref(database, 'items');
+                const snapshot = await get(dbRef);
+
+                if (!snapshot.exists()) {
+                    alert('No items found!');
+                    return;
+                }
+
+                const items = snapshot.val();
+                const itemKeys = Object.keys(items);
+                const deletionPromises = [];
+
+                itemKeys.forEach(key => {
+                    if (items[key].item === itemName) {
+                        deletionPromises.push(remove(child(dbRef, key)));
+                    }
+                });
+
+                if (deletionPromises.length === 0) {
+                    alert('Item not found!');
+                    return;
+                }
+
+                await Promise.all(deletionPromises);
+
+                alert('Item deleted successfully!');
+                event.target.reset();
+            } catch (error) {
+                alert('Error: ' + error.message);
             }
         });
     </script>

@@ -92,6 +92,7 @@ button:hover {
 
 .item-card.active .item-info {
     opacity: 1;
+    
 }
 
 .item-card .item-info .item-name {
