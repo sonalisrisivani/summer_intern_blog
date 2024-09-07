@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title> Authorise </title>
+</head>
+
+<body>
+<h1> Enter details </h1>
+
+  <div class="form-container">
+        <form id="loginForm" action="enter.html" method="GET">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Enter</button>
+        </form>
+    </div>
+
+
+
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            // Get the input values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Check if the username and password match the required credentials
+            if (username !== 'sonali21' || password !== 'host') {
+                event.preventDefault(); // Stop form submission if the credentials don't match
+                alert('Invalid username or password');
+            }
+        });
+    </script>
+
+</body>
+</html>
