@@ -4,42 +4,50 @@
 
 ### 1. clone this repository using the below command:
 
-``` git clone "https://github.com/sonalisrisivani/dynamic_blog" ```
+``` git clone "https://github.com/sonalisrisivani/summer_intern_blog" ```
 
 ### 2. Now, Go to Firebase Console and and Create a Project and name it (I named it story). 
 
-### 3. In Project section -> Go to Settings in Project Overview -> Project Settings -> your apps -> web icon </> in bottom -> appname -> set firebase hosting -> register app -> Add firebase SDK -> Here im using js, so -> use script tag -> copy the firebase cnfig which is displayed 
+### 3. In Project section -> Go to Settings in Project Overview -> Project Settings -> your apps -> web icon </> in bottom -> appname(dynamic-blog-intern) -> set firebase hosting -> register app -> Add firebase SDK -> Here im using js, so -> use script tag -> copy the firebase cnfig which is displayed 
 
 
 ``` 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+   <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyC2SQ1nSwkGbli1EClWffp84YJrVI7KxZE",
-            authDomain: "dynamic-blog-c41a0.firebaseapp.com",
-            databaseURL: "https://dynamic-blog-c41a0-default-rtdb.firebaseio.com",
-            projectId: "dynamic-blog-c41a0",
-            storageBucket: "dynamic-blog-c41a0.appspot.com",
-            messagingSenderId: "977944393868",
-            appId: "1:977944393868:web:fc669305460f925f99a3a9",
-            measurementId: "G-9FNKR9DHRZ"
-        };
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6CfsdPlIhTlivJmezWKbjleuhIfdfJKg",
+    authDomain: "dynamic-blog-intern.firebaseapp.com",
+    projectId: "dynamic-blog-intern",
+    storageBucket: "dynamic-blog-intern.appspot.com",
+    messagingSenderId: "427652086125",
+    appId: "1:427652086125:web:bd814d0ef3e5afc0e3c264",
+    measurementId: "G-1P33X5BTM6"
+  };
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
 ```
+VERY IMP : dont forget to add the databaseURL which you will find in realtime database or firestore database . here i used realtime database.
 
 
 
 ### 4. Copy your snippet and paste in the html file 
 
-### 5. After Creating project , Create Database -> Firebase project -> build -> Firestore database -> Create database -> Enter Location -> Test mode -> Next -> Done. 
+### 5. After Creating project ,in left side: product categories-> build-> Create Database -> Firebase project -> build -> Firestore database -> Create database -> Enter Location -> Test mode -> Next -> Done. 
 
-### 6. Start collections -> Document ID -> auto generate -> You can create as many collections as you want(I created a collection called items) ->  set columns/attributes for each of the collections with their respective DataTypes (I made 3 fields in the items collection)
+### 6. we are using realtime database, objects are cerated on their own ,  only thing you have to do its, the link which is present in -realtime datavase -> data -> link inside this -> top -> copy and paste in firebase config -> databaseURL: "https://dynamic-blog-intern-default-rtdb.asia-southeast1.firebasedatabase.app/"
+https://dynamic-blog-intern-default-rtdb.asia-southeast1.firebasedatabase.app/
+
+
 
 ## Features:
 
@@ -56,8 +64,9 @@
 - ** Firebase **: Used for database management and authentication.
 
 ## Database Format:
+(actually there is no format, it is NoSQL db , every entry in entered as an object. based on the code, the columns(keys ) are )
 
--** Project name **: story
+-** Project name **: summer-intern
 -** Collection name **: items
 -** Fields and their Datatypes **: 
    1. item (String)

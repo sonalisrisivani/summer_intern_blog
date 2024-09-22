@@ -68,18 +68,19 @@
         import { getDatabase, ref, set, remove, get, child } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyC2SQ1nSwkGbli1EClWffp84YJrVI7KxZE",
-            authDomain: "dynamic-blog-c41a0.firebaseapp.com",
-            databaseURL: "https://dynamic-blog-c41a0-default-rtdb.firebaseio.com",
-            projectId: "dynamic-blog-c41a0",
-            storageBucket: "dynamic-blog-c41a0.appspot.com",
-            messagingSenderId: "977944393868",
-            appId: "1:977944393868:web:fc669305460f925f99a3a9",
-            measurementId: "G-9FNKR9DHRZ"
+            apiKey: "AIzaSyC6CfsdPlIhTlivJmezWKbjleuhIfdfJKg",
+            authDomain: "dynamic-blog-intern.firebaseapp.com",
+            databaseURL: "https://dynamic-blog-intern-default-rtdb.asia-southeast1.firebasedatabase.app/", // Add the database URL here
+            projectId: "dynamic-blog-intern",
+            storageBucket: "dynamic-blog-intern.appspot.com",
+            messagingSenderId: "427652086125",
+            appId: "1:427652086125:web:bd814d0ef3e5afc0e3c264",
+            measurementId: "G-1P33X5BTM6"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const database = getDatabase(app); // Initialize the database
 
         // Add item to Firebase
         document.getElementById('addItem').addEventListener('click', function() {
